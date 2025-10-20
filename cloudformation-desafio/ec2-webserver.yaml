@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cria uma instância EC2 com Apache e regras de segurança
+
+Parameters:
+  KeyName:
+    Description: Nome da chave SSH para acesso à instância
+    Type: AWS::EC2::KeyPair::KeyName
+  InstanceType:
+    Description: Tipo da instância EC2
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+
+Resources:
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Permite acesso SSH e HTTP
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  WebServerInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - !Ref WebServerSecurityGroup
+      ImageId: ami-0c55b159cbfafe1f0 # Amazon Linux 2 (região us-east-1)
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd
+          systemctl enable httpd
+          echo "<h1>Servidor Web criado via CloudFormation</h1>" > /var/www/html/index.html
+
+Outputs:
+  InstanceId:
+    Description: ID da instância EC2
+    Value: !Ref WebServerInstance
+  PublicIP:
+    Description: IP público da instância
+    Value: !GetAtt WebServerInstance.PublicIp
