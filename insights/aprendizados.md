@@ -12,3 +12,4 @@ Validar cada etapa da infraestrutura ajuda a diagnosticar problemas com mais agi
 Realizar a configuração manual fortalece a compreensão do que pode ser automatizado via CloudFormation
 A instalação manual do Apache via SSH reforça o entendimento da estrutura de pacotes e serviços no Ubuntu
 O Apache responde automaticamente na porta 80 após a instalação, permitindo testes imediatos via navegador
+Usado integração entre S3, Lambda e SNS para notificação automática de uploads.
