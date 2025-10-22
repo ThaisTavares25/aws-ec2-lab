@@ -10,3 +10,5 @@ A conexão via SSH exige atenção ao IP público, permissões da chave e grupo 
 A instalação manual do Apache no Ubuntu é simples e reforça o entendimento do ambiente
 Validar cada etapa da infraestrutura ajuda a diagnosticar problemas com mais agilidade
 Realizar a configuração manual fortalece a compreensão do que pode ser automatizado via CloudFormation
+A instalação manual do Apache via SSH reforça o entendimento da estrutura de pacotes e serviços no Ubuntu
+O Apache responde automaticamente na porta 80 após a instalação, permitindo testes imediatos via navegador
